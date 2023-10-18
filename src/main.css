@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+#navbar select {
+    margin: 0 10px;
+}
+
+#container {
+    display: flex;
+    flex: 1;
+}
+
+#sidebar {
+    width: 250px; /* Ширина сайдбара */
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+#canvas-container {
+    flex: 1;
+    position: relative;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Scene</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <nav id="navbar">
+        <label for="file-dropdown">File:</label>
+        <select id="file-dropdown">
+            <option value="import">Import</option>
+            <option value="export">Export</option>
+        </select>
+        <label for="add-dropdown">Add:</label>
+        <select id="add-dropdown">
+            <option value="room1">Room 1</option>
+            <option value="room2">Room 2</option>
+        </select>
+        <label for="edit-dropdown">Edit:</label>
+        <select id="edit-dropdown">
+            <option value="clear">Clear</option>
+        </select>
+    </nav>
+
+    <div id="container">
+        <aside id="sidebar">
+            <label for="background-color">Background Color:</label>
+            <input type="color" id="background-color"><br>
+            <label for="material-type">Material Type:</label>
+            <select id="material-type">
+                <option value="material1">Material 1</option>
+                <option value="material2">Material 2</option>
+            </select>
+        </aside>
+
+        <div id="canvas-container">
+            <canvas data-engine="three.js r157" id="canvas"></canvas>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
