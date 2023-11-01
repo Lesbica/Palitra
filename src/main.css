@@ -10,15 +10,35 @@ body {
     background-color: #333;
     color: #fff;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
-#navbar select {
-    margin: 0 10px;
+.nav-item {
+    position: relative;
+}
+
+.nav-submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+}
+
+.nav-item:hover .nav-submenu {
+    display: block;
+    background-color: black; /* Черный фон для выпадающего меню */
+}
+
+.nav-option {
+    cursor: pointer;
+    padding: 5px;
+    color: white; /* Цвет текста в выпадающем меню */
 }
 
 #container {
     display: flex;
-    flex: 1;
 }
 
 #sidebar {

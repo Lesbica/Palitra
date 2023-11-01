@@ -8,27 +8,33 @@
 </head>
 <body>
     <nav id="navbar">
-        <label for="file-dropdown">File:</label>
-        <select id="file-dropdown">
-            <option value="import">Import</option>
-            <option value="export">Export</option>
-        </select>
-        <label for="add-dropdown">Add:</label>
-        <select id="add-dropdown">
-            <option value="room1">Room 1</option>
-            <option value="room2">Room 2</option>
-        </select>
-        <label for="edit-dropdown">Edit:</label>
-        <select id="edit-dropdown">
-            <option value="clear">Clear</option>
-        </select>
+        <div class="nav-item" id="file-dropdown">
+            <label for="file">File:</label>
+            <div class="nav-submenu">
+                <div class="nav-option">Import</div>
+                <div class="nav-option">Export</div>
+            </div>
+        </div>
+        <div class="nav-item" id="add-dropdown">
+            <label for="add">Add:</label>
+            <div class="nav-submenu">
+                <button class="nav-option" id="add-room1">Room 1</button>
+                <button class="nav-option" id="add-room2">Room 2</button>
+            </div>
+        </div>
+        <div class="nav-item" id="edit-dropdown">
+            <label for="edit">Edit:</label>
+            <div class="nav-submenu">
+                <div class="nav-option">Clear</div>
+            </div>
+        </div>
     </nav>
 
     <div id="container">
         <aside id="sidebar">
             <label for="background-color">Background Color:</label>
-            <input type="color" id="background-color"><br>
-            <label for="material-type">Material Type:</label>
+            <input type="color" id="background-color">
+            <label for="material-type"><br>Material Type:</label>
             <select id="material-type">
                 <option value="material1">Material 1</option>
                 <option value="material2">Material 2</option>
@@ -36,12 +42,12 @@
         </aside>
 
         <div id="canvas-container">
-            <canvas data-engine="three.js r157" id="canvas"></canvas>
+            <canvas id="canvas"></canvas>
         </div>
     </div>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="tree.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
