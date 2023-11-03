@@ -18,22 +18,23 @@
         <div class="nav-item" id="add-dropdown">
             <label for="add">Add:</label>
             <div class="nav-submenu">
-                <button class="nav-option" id="add-room1">Room 1</button>
-                <button class="nav-option" id="add-room2">Room 2</button>
+                <div class="nav-option" id="chair">Chair</div>
+                <div class="nav-option" id="bed">Bed</div>
+                <div class="nav-option" id="sofa">Sofa</div>
             </div>
         </div>
         <div class="nav-item" id="edit-dropdown">
             <label for="edit">Edit:</label>
             <div class="nav-submenu">
-                <div class="nav-option">Clear</div>
+                <div class="nav-option" id = "clear">Clear</div>
             </div>
         </div>
     </nav>
 
     <div id="container">
         <aside id="sidebar">
-            <label for="background-color">Background Color:</label>
-            <input type="color" id="background-color">
+            <label for="figure-color">Figure Color:</label>
+            <input type="color" id="figure-color">
             <label for="material-type"><br>Material Type:</label>
             <select id="material-type">
                 <option value="material1">Material 1</option>
@@ -47,7 +48,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="tree.js"></script>
+    <script type="module" src="tree.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
