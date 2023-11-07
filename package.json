@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "three": "^0.153.0",
+    "three-gltf-exporter": "^0.0.1",
     "three-transform-controls": "^1.0.4"
   }
 }

@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader';
+import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -13,6 +16,7 @@ THREE.ColorManagement.enabled = true;
 const controls = new OrbitControls(camera, renderer.domElement);
 
 const loader = new OBJLoader();
+const gltfLoader = new GLTFLoader().setDRACOLoader(new DRACOLoader());
 let loadedModel = null;
 
 camera.position.set(0, 0, 5);
@@ -75,91 +79,117 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+function loadAndAddModel(modelPath) {
+    if (loadedModel) {
+        scene.remove(loadedModel);
+    }
+    loader.load(
+        modelPath,
+    // вызывается когда ресурс загружен
+    function ( object ) {
+        loadedModel = object;
+        scene.add( object );
 
+        // Подсчет ограничивающей рамки фигуры
+        const boundingBox = new THREE.Box3().setFromObject(loadedModel);
+
+        // Вычисление центра ограничивающей рамки
+        const center = boundingBox.getCenter(new THREE.Vector3());
+
+        // Получение размеров ограничивающей рамки
+        const size = boundingBox.getSize(new THREE.Vector3());
+
+        // Вычисление диагонали ограничивающей рамки
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const fov = camera.fov * (Math.PI / 180);
+        let distance = Math.abs(maxDim / Math.sin(fov / 2));
+
+        // Подгонка положения и масштаба камеры
+        camera.position.copy(center);
+        camera.position.z += distance;
+        camera.lookAt(center);
+
+        // Устанавливаем позицию камеры и зум
+        controls.target.copy(center);
+        controls.update();
+
+    },
+    // вызывается когда загружется
+    function ( xhr ) {
+
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+    },
+    // вызываеться когда есть ошибка
+    function ( error ) {
+
+        console.log( 'An error happened' );
+
+    }
+    );
+}
+
+function loadAndAddModelGLTF(modelPath) {
+    if (loadedModel) {
+        scene.remove(loadedModel);
+    }
+    gltfLoader.load(
+        modelPath,
+    // вызывается когда ресурс загружен
+    function ( gltf ) {
+        loadedModel = gltf.scene;
+        scene.add( gltf.scene );
+
+        // Подсчет ограничивающей рамки фигуры
+        const boundingBox = new THREE.Box3().setFromObject(loadedModel);
+
+        // Вычисление центра ограничивающей рамки
+        const center = boundingBox.getCenter(new THREE.Vector3());
+
+        // Получение размеров ограничивающей рамки
+        const size = boundingBox.getSize(new THREE.Vector3());
+
+        // Вычисление диагонали ограничивающей рамки
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const fov = camera.fov * (Math.PI / 180);
+        let distance = Math.abs(maxDim / Math.sin(fov / 2));
+
+        // Подгонка положения и масштаба камеры
+        camera.position.copy(center);
+        camera.position.z += distance;
+        camera.lookAt(center);
+
+        // Устанавливаем позицию камеры и зум
+        controls.target.copy(center);
+        controls.update();
+
+    },
+    // вызывается когда загружется
+    function ( xhr ) {
+
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+    },
+    // вызываеться когда есть ошибка
+    function ( error ) {
+
+        console.log( 'An error happened' );
+
+    }
+    );
+}
 
 // Обработчики событий для добавления объектов
 document.getElementById("chair").addEventListener("click", () => {
-    if(loadedModel){
-        scene.remove(loadedModel);
-    }
-    loader.load(
-        // resource URL
-        'static/Chair.obj',
-        // called when resource is loaded
-        function ( object ) {
-            loadedModel = object;
-            scene.add( object );
-    
-        },
-        // called when loading is in progresses
-        function ( xhr ) {
-    
-            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    
-        },
-        // called when loading has errors
-        function ( error ) {
-    
-            console.log( 'An error happened' );
-    
-        }
-    );
+    loadAndAddModel('static/Chair.obj');
 });
 
 document.getElementById("sofa").addEventListener("click", () => {
-    if(loadedModel){
-        scene.remove(loadedModel);
-    }
-    loader.load(
-        // resource URL
-        'static/Koltuk.obj',
-        // called when resource is loaded
-        function ( object ) {
-            loadedModel = object;
-            scene.add( object );
-    
-        },
-        // called when loading is in progresses
-        function ( xhr ) {
-    
-            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    
-        },
-        // called when loading has errors
-        function ( error ) {
-    
-            console.log( 'An error happened' );
-    
-        }
-    );
+    loadAndAddModel('static/Sofa.obj');
 });
 
 document.getElementById("bed").addEventListener("click", () => {
-    if(loadedModel){
-        scene.remove(loadedModel);
-    }
-    loader.load(
-        // resource URL
-        'static/Bed.obj',
-        // called when resource is loaded
-        function ( object ) {
-            loadedModel = object;
-            scene.add( object );
-    
-        },
-        // called when loading is in progresses
-        function ( xhr ) {
-    
-            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    
-        },
-        // called when loading has errors
-        function ( error ) {
-    
-            console.log( 'An error happened' );
-    
-        }
-    );
+    loadAndAddModel('static/Bed.obj');
 });
 
 
@@ -182,7 +212,7 @@ figureColorInput.addEventListener("input", (event) => {
     // Преобразуем HEX в RGB и создаем объект цвета
     const color = new THREE.Color(colorHex);
 
-    // Устанавливаем цвет для вашего объекта (например, loadedModel)
+    // Устанавливаем цвет для объекта (loadedModel)
     if (loadedModel) {
         loadedModel.traverse((child) => {
             if (child.isMesh) {
@@ -191,8 +221,6 @@ figureColorInput.addEventListener("input", (event) => {
         });
     }
 });
-
-
 
 const materialTypeSelect = document.getElementById("material-type");
 
@@ -203,18 +231,73 @@ materialTypeSelect.addEventListener("change", (event) => {
 
     if (selectedMaterialType === "iron") {
         texture = new THREE.TextureLoader().load('texture/iron.jpg' );
-        material = new THREE.MeshPhongMaterial( {map: texture} );
+        material = new THREE.MeshBasicMaterial( {map: texture} );
     } else if (selectedMaterialType === "wood") {
         texture = new THREE.TextureLoader().load('texture/wood.jpg' ); 
-        material = new THREE.MeshToonMaterial( {map: texture} );
+        material = new THREE.MeshBasicMaterial( {map: texture} );
     }
 
-    // Применяем выбранный материал к вашему объекту (например, loadedModel)
+    // Применяем выбранный материал к объекту (loadedModel)
     if (loadedModel) {
         loadedModel.traverse((child) => {
             if (child.isMesh) {
                 child.material = material;
             }
+        });
+    }
+});
+
+const fileInput = document.getElementById('file-input');
+const importOption = document.getElementById('import-option');
+
+// Обработчик нажатия на "Import"
+importOption.addEventListener('click', () => {
+    // Симулируем клик по скрытому input элементу
+    fileInput.click();
+});
+
+// Обработчик выбора файла
+fileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+        const fileName = file.name;
+      const fileExtension = fileName.split('.').pop().toLowerCase();
+
+        if (fileExtension === "obj") {
+            console.log("Selected file is of type OBJ.");
+            const filePath = URL.createObjectURL(file);
+            loadAndAddModel(filePath);
+          } else if (fileExtension === "gltf") {
+            console.log("Selected file is of type GLTF.");
+            const filePath = URL.createObjectURL(file);
+            loadAndAddModelGLTF(filePath);
+          }
+        
+    }
+});
+
+const exportOption = document.getElementById('export-option');
+
+exportOption.addEventListener('click', () => {
+    if (loadedModel) {
+        // JSON-представление загруженной модели
+        const gltfExporter = new GLTFExporter();
+        gltfExporter.parse(loadedModel, (result) => {
+            const gltfData = JSON.stringify(result);
+
+            // Ссылка для скачивания файла
+            const blob = new Blob([gltfData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'exported_model.gltf'; // Имя файла
+            document.body.appendChild(a);
+            a.click();
+
+            // Очистить ссылку после скачивания
+            window.URL.revokeObjectURL(url);
         });
     }
 });

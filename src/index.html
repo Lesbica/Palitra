@@ -7,12 +7,13 @@
     <link href="main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <input type="file" id="file-input" accept=".obj,.gltf" style="display: none;" />
     <nav id="navbar">
         <div class="nav-item" id="file-dropdown">
             <label for="file">File:</label>
             <div class="nav-submenu">
-                <div class="nav-option">Import</div>
-                <div class="nav-option">Export</div>
+                <div class="nav-option" id="import-option">Import</div>
+                <div class="nav-option" id="export-option">Export</div>
             </div>
         </div>
         <div class="nav-item" id="add-dropdown">
