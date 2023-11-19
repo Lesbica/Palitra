@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Scene</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <script type="module" crossorigin src="./assets/index-ff0035d3.js"></script>
+  <link rel="stylesheet" href="./assets/index-3f74aa13.css">
+</head>
+<body>
+    <input type="file" id="file-input" accept=".obj,.gltf" style="display: none;" />
+    <nav id="navbar">
+        <div class="nav-item" id="file-dropdown">
+            <label for="file">File:</label>
+            <div class="nav-submenu">
+                <div class="nav-option" id="import-option">Import</div>
+                <div class="nav-option" id="export-option">Export</div>
+            </div>
+        </div>
+        <div class="nav-item" id="add-dropdown">
+            <label for="add">Add:</label>
+            <div class="nav-submenu">
+                <div class="nav-option" id="chair">Chair</div>
+                <div class="nav-option" id="bed">Bed</div>
+                <div class="nav-option" id="sofa">Sofa</div>
+            </div>
+        </div>
+        <div class="nav-item" id="edit-dropdown">
+            <label for="edit">Edit:</label>
+            <div class="nav-submenu">
+                <div class="nav-option" id = "clear">Clear</div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="container">
+        <aside id="sidebar">
+            <label for="figure-color">Figure Color:</label>
+            <input type="color" id="figure-color">
+            <label for="material-type"><br>Material Type:</label>
+            <select id="material-type">
+                <option value="iron">Iron</option>
+                <option value="wood">Wood</option>
+            </select>
+        </aside>
+
+        <div id="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    
+</body>
+</html>
